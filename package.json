@@ -1,0 +1,22 @@
+{
+  "name": "playwight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "percy:test": "percy exec -- playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@percy/cli": "^1.31.0",
+    "@percy/playwright": "^1.0.8",
+    "@playwright/test": "^1.37.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "xlsx": "^0.18.5"
+  }
+}
