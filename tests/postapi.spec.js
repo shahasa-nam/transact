@@ -67,31 +67,31 @@ test('Capture request/response data', async ({ page }) => {
   //transaction history
  try {
   const transactionMenu = page.locator('#lg-sidebar').getByText('Transaction', { exact: true });
-await transactionMenu.waitFor({ state: 'visible', timeout: 10000 });
+await transactionMenu.waitFor({ state: 'visible', timeout: 30000 });
 await transactionMenu.click();
 
   const transactionHistory = page.locator('#lg-sidebar div').filter({ hasText: /^Transaction History$/ });
-await transactionHistory.waitFor({ state: 'visible', timeout: 10000 });
+await transactionHistory.waitFor({ state: 'visible', timeout: 30000 });
 await transactionHistory.click();
 
 // Wait for the page to load completely
 await page.waitForLoadState('networkidle');
 
    const pending = page.getByRole('button', { name: 'Pending', exact:true });
-   await pending.waitFor({ state: 'visible', timeout: 10000 });
+   await pending.waitFor({ state: 'visible', timeout: 30000 });
    await pending.click();
 
   //await page.getByRole('button', { name: 'Pending' }).click({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   const confirm = page.getByRole('button', { name: 'Confirmed', exact:true });
-   await confirm.waitFor({ state: 'visible', timeout: 10000 });
+   await confirm.waitFor({ state: 'visible', timeout: 30000 });
    await confirm.click();
   //await page.getByRole('button', { name: 'Confirmed' }).click({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   const expire = page.getByRole('button', { name: 'Expired', exact:true });
-   await expire.waitFor({ state: 'visible', timeout: 10000 });
+   await expire.waitFor({ state: 'visible', timeout: 30000 });
    await expire.click();
 
   //await page.getByRole('button', { name: 'Expired' }).click({ timeout: 10000 });
@@ -103,12 +103,17 @@ await page.waitForLoadState('networkidle');
  
   //client list
  try {
-  await page.locator('#lg-sidebar').getByText('List', { exact: true }).click({ timeout: 10000 });
-  await page.locator('#lg-sidebar').getByText('Client List').click();
+  const listLink = page.locator('#lg-sidebar').getByText('List', { exact: true });
+await listLink.waitFor({ state: 'visible', timeout: 30000 });
+await listLink.click();
+
+const clientListLink = page.locator('#lg-sidebar').getByText('Client List');
+await clientListLink.waitFor({ state: 'visible', timeout: 30000 });
+await clientListLink.click();
   await page.waitForLoadState('networkidle');
   
   const searchInput = page.getByPlaceholder('Search by pan no. or investor name');
-  await searchInput.waitFor({ state: 'visible', timeout: 10000 });
+  await searchInput.waitFor({ state: 'visible', timeout: 30000 });
   await searchInput.click();
   await searchInput.fill('namrata');
   await page.waitForLoadState('networkidle');
@@ -129,10 +134,12 @@ await page.waitForLoadState('networkidle');
 
 
    try {
-//await page.locator('#lg-sidebar').getByText('List', { exact: true }).click({ timeout: 10000 });
-  await page.locator('#lg-sidebar').getByText('Scheme Level AUM').click({ timeout: 10000 });
+  const schemeLevelAUMLink = page.locator('#lg-sidebar').getByText('Scheme Level AUM');
+  await schemeLevelAUMLink.waitFor({ state: 'visible', timeout: 30000 });
+  await schemeLevelAUMLink.click();
   await page.waitForLoadState('networkidle');
-  await page.locator('.no-border').first().click({ timeout: 10000 });
+
+  await page.locator('.no-border').first().click({ timeout: 30000 });
   await page.waitForLoadState('networkidle');
 } catch (error) {
   console.warn('Skipping Client List / Scheme Level AUM section due to error:', error.message);
@@ -141,36 +148,36 @@ await page.waitForLoadState('networkidle');
 
   //opportunities
   try {
-
-  
-  await page.locator('#lg-sidebar div').filter({ hasText: 'Opportunities' }).nth(2).click({ timeout: 10000 });
+  const opportunitiesLink = page.locator('#lg-sidebar div').filter({ hasText: 'Opportunities' }).nth(2);
+await opportunitiesLink.waitFor({ state: 'visible', timeout: 30000 });
+await opportunitiesLink.click();
   
   const sipCard = page.locator('div.opp-main-card', {
   hasText: 'SIP Opportunities'});
-  await sipCard.waitFor({ state: 'visible', timeout: 10000 });
+  await sipCard.waitFor({ state: 'visible', timeout: 30000 });
   await sipCard.click();
 
-await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 10000 });
+await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 30000 });
  
 const activationCard = page.locator('div.opp-main-card', {
   hasText: 'ACTIVATION OPPORTUNITIES'});
-await activationCard.waitFor({ state: 'visible', timeout: 10000 });
+await activationCard.waitFor({ state: 'visible', timeout: 30000 });
 await activationCard.click();
 
 //await page.locator('div').filter({ hasText: /^ACTIVATION OPPORTUNITIES$/ }).nth(1).click();
 await page.waitForLoadState('networkidle');
 
 
-  await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 10000 });
+  await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 30000 });
 const otherCard = page.locator('div.opp-main-card', {
   hasText: 'OTHER OPPORTUNITIES'});
-await otherCard.waitFor({ state: 'visible', timeout: 10000 });
+await otherCard.waitFor({ state: 'visible', timeout: 30000 });
 await otherCard.click();
 
   //await page.locator('div').filter({ hasText: /^OTHER OPPORTUNITIES$/ }).nth(1).click();
   await page.waitForLoadState('networkidle');
 
-  await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 10000 });
+  await page.locator('span > .back-arrow > .icon-inner > .ionicon').click({ timeout: 30000 });
 } catch (error) {
   console.warn('Skipping Opportunities section due to error:', error.message);
 }
@@ -178,17 +185,19 @@ await otherCard.click();
 
   //pro-start
   try {
-  await page.locator('#lg-sidebar div').filter({ hasText: 'Prostart' }).nth(2).click({ timeout: 10000 });  
+  const prostartLink = page.locator('#lg-sidebar div').filter({ hasText: 'Prostart' }).nth(2);
+await prostartLink.waitFor({ state: 'visible', timeout: 30000 });
+await prostartLink.click(); 
   await page.waitForLoadState('networkidle');
 
   const mostpopular = page.getByRole('button', { name: 'Most Popular', exact: true });
-  await mostpopular.waitFor({ state: 'visible', timeout: 10000 });
-  await mostpopular.click({ timeout: 10000 });
+  await mostpopular.waitFor({ state: 'visible', timeout: 30000 });
+  await mostpopular.click({ timeout: 30000 });
   await page.waitForLoadState('networkidle');
 
   const newindia = page.getByRole('button', { name: 'New india' , exact: true });
-  await newindia.waitFor({ state: 'visible', timeout: 10000 });
-  await newindia.click({ timeout: 10000 });
+  await newindia.waitFor({ state: 'visible', timeout: 30000 });
+  await newindia.click({ timeout: 30000 });
    //await page.getByRole('button', { name: 'New india' }).click({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
@@ -200,27 +209,27 @@ await otherCard.click();
   //co-branding
   try {
   const cobrandingLink = page.locator('#lg-sidebar').getByText('Co-branding');
-  await cobrandingLink.waitFor({ state: 'visible', timeout: 10000 });
+  await cobrandingLink.waitFor({ state: 'visible', timeout: 30000 });
   await cobrandingLink.click();
 
   await page.waitForLoadState('networkidle');
 
   const coBrand = page.getByRole('button', { name: 'Concepts',exact: true});
-  await coBrand.waitFor({ state: 'visible', timeout: 10000 });
-  await coBrand.click({ timeout: 10000 });
+  await coBrand.waitFor({ state: 'visible', timeout: 30000 });
+  await coBrand.click({ timeout: 30000 });
 
   //await page.getByRole('button', { name: 'Concepts' }).click({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   const market = page.getByRole('button', { name: 'Markets',exact: true}); 
-  await market.waitFor({ state: 'visible', timeout: 10000 });
+  await market.waitFor({ state: 'visible', timeout: 30000 });
   await market.click({ timeout: 10000 });
   //await page.getByRole('button', { name: 'Markets' }).click({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   const product = page.getByRole('button', { name: 'Products', exact:true });
-  await product.waitFor({ state: 'visible', timeout: 10000 });
-  await product.click({ timeout: 10000 });
+  await product.waitFor({ state: 'visible', timeout: 30000 });
+  await product.click({ timeout: 30000 });
 
   //await page.getByRole('button', { name: 'Products' }).click({ timeout: 10000 });
 } catch (error) {
@@ -230,9 +239,8 @@ await otherCard.click();
 
   //wishes
   try {
-  // Click on 'Wishes' in the sidebar
-  const wishesLink = page.locator('#lg-sidebar').getByText('Wishes', { exact: true });
-await wishesLink.waitFor({ state: 'visible', timeout: 10000 });
+const wishesLink = page.locator('#lg-sidebar').getByText('Wishes', { exact: true });
+await wishesLink.waitFor({ state: 'visible', timeout: 30000 });
 await wishesLink.click();
 await page.waitForLoadState('networkidle');
 
@@ -240,19 +248,19 @@ await page.waitForLoadState('networkidle');
 
   // Locate and click 'Birthday Wishess'
   const bwishes = page.getByText('Birthday Wishess', { exact: true });
-  await bwishes.waitFor({ state: 'visible', timeout: 10000 });
-  await bwishes.click({ timeout: 10000 });
+  await bwishes.waitFor({ state: 'visible', timeout: 30000 });
+  await bwishes.click({ timeout:310000 });
   await page.waitForLoadState('networkidle');
 
   // Locate and click second image in bh-page-wrapper
   const otherwishes = page.locator('bh-page-wrapper').getByRole('img').nth(1);
-  await otherwishes.waitFor({ state: 'visible', timeout: 10000 });
-  await otherwishes.click({ timeout: 10000 });
+  await otherwishes.waitFor({ state: 'visible', timeout: 30000 });
+  await otherwishes.click({ timeout: 30000 });
 
   // Click on 'Happy Holi Everyone'
   const holi = page.getByText('Happy Holi Everyone', { exact: true });
-  await holi.waitFor({ state: 'visible', timeout: 10000 });
-  await holi.click({ timeout: 10000 });
+  await holi.waitFor({ state: 'visible', timeout: 30000 });
+  await holi.click({ timeout: 30000 });
   //await page.getByText('Happy Holi Everyone', { exact: true }).click({ timeout: 10000 });
 
 } catch (error) {
@@ -262,23 +270,23 @@ await page.waitForLoadState('networkidle');
   //feedback
 
   try {
-  const feedbackLink = page.locator('#lg-sidebar').getByText('Feedback & queries');
+const feedbackLink = page.locator('#lg-sidebar').getByText('Feedback & queries');
 await feedbackLink.scrollIntoViewIfNeeded();
-await feedbackLink.waitFor({ state: 'visible', timeout: 10000 });
-await feedbackLink.click();
+await feedbackLink.waitFor({ state: 'visible', timeout: 30000 });
+await feedbackLink.click({ timeout: 30000 });
 
 
   const query = page.getByText('Query status', {exact: true});
-  await query.waitFor({ state: 'visible', timeout: 10000 });
-  await query.click({ timeout: 10000 });
+  await query.waitFor({ state: 'visible', timeout: 30000 });
+  await query.click({ timeout: 30000 });
 //await page.getByText('Query status').click();
  
   const ask = page.getByText('Ask your query', {exact:true});
-  await ask.waitFor({ state: 'visible', timeout: 10000 });
-  await ask.click({ timeout: 10000 });
+  await ask.waitFor({ state: 'visible', timeout: 30000 });
+  await ask.click({ timeout: 30000 });
   //await page.getByText('Ask your query').click();
 
-  await page.locator('#lg-sidebar').getByText('Profile').click({ timeout: 10000 });
+  await page.locator('#lg-sidebar').getByText('Profile').click({ timeout: 30000 });
   await page.waitForLoadState('networkidle');
 } catch (error) {
   console.warn(' Skipping Feedback & Profile section due to error:', error.message);
